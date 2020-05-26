@@ -384,14 +384,20 @@ let content_0 = `<div class="padded">
     <div class="spacer"></div>
     <h2>Contents</h2>
     <ol style="">
-      <li>Training environments</li>
-      <li>Model training</li>
-      <li>Results - training dataset</li>
-      <li>Results - test dataset</li>
-      <li>Interpretability with LIME</li>
-      <li>Ranking superpixels</li>
-      <li>Model comparison</li>
-    </ol>
+    ${[
+      'Training environments',
+      'Model training',
+      'Results: training datasets',
+      'Results: test dataset',
+      'Interpretability',
+      'Ranking superpixels',
+      'Model comparison',
+    ]
+      .map((n, i) => {
+        return `<li><a href="#bar_${i}">${n}</a></li>`
+      })
+      .join('')}
+   </ol>
     </div>
   </div>
 </div>`
@@ -1680,6 +1686,7 @@ let html = `<!DOCTYPE html>
         font-family: sans-serif, monospace;
         font-size: 16;
         line-height: 24px;
+        scroll-behavior: smooth;
       }
       body {
         padding: 0;
@@ -1765,9 +1772,9 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
       .map((n, i) => {
         let content = contents[i]
         return `<div style="position: relative">
-          <div class="bar" style="">
+          <div id="bar_${i}" class="bar" style="">
             <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;"><div>${i +
-              0}</div><div>prev next more</div></div>
+              0}</div><div>prev next</div></div>
           </div>
         <div class="panel" style="position: relative;">
           <div style="width: 100%; padding-left: ${size.x * 2 -
