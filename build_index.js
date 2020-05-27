@@ -555,7 +555,7 @@ let content_2 = `<div class="padded">
   <h1>Model training</h1>
   <div>
    <div class="p">We trained two models, one using IRM, and one using the more conventional empirical risk minimization (ERM).</div>
-    <div class="p">For ERM training, all the images are fed in together (top row), with no distinction made between environments. In IRM training, the images are grouped by environment (bottom row) and the loss function is adjusted to try and balance performance across both environments.</div>
+    <div class="p">The environments are fed into both models in batches. For the IRM model, the loss function is adjusted to try and balance classification performance across each environment. The adjusted loss function is what distinguishes IRM from the ERM approach.</div>
   </div>
 </div>`
 
@@ -575,25 +575,12 @@ if (args.includes('2')) {
 
   let promises = []
 
-  let eight = [..._.sampleSize(train_43, 4), ..._.sampleSize(train_46, 4)]
-
-  // doing it the dumb way
-  let images = [
-    eight[0],
-    eight[4],
-    eight[1],
-    eight[5],
-    eight[2],
-    eight[6],
-    eight[3],
-    eight[7],
-    ...eight,
-  ]
+  let images = [..._.sampleSize(train_43, 8), ..._.sampleSize(train_46, 8)]
   for (let i = 0; i < images.length; i++) {
     let image = images[i]
     let [bx, by] = panel_image_slots[i]
-    let x = bx * size.x + offset_x
-    let y = by * size.y + offset_y
+    let x = offset_x + bx * size.x
+    let y = offset_y + by * size.y
     let path = 'data' + image.image_path
 
     let env = getEnv(path)
@@ -747,14 +734,17 @@ if (args.includes('3')) {
   })
 
   let images = [
-    ..._.sampleSize(train_43_right, 6),
-    ..._.sampleSize(train_43_irm_only_right, 1),
-    ..._.sampleSize(train_43_wrong, 1),
-    ..._.sampleSize(train_46_right, 6),
-    ..._.sampleSize(train_46_wrong, 1),
-    ..._.sampleSize(train_46_erm_only_right, 1),
+    ..._.shuffle([
+      ..._.sampleSize(train_43_right, 6),
+      ..._.sampleSize(train_43_irm_only_right, 1),
+      ..._.sampleSize(train_43_wrong, 1),
+    ]),
+    ..._.shuffle([
+      ..._.sampleSize(train_46_right, 6),
+      ..._.sampleSize(train_46_wrong, 1),
+      ..._.sampleSize(train_46_erm_only_right, 1),
+    ]),
   ]
-  images = _.shuffle(images)
   for (let i = 0; i < images.length; i++) {
     let image = images[i]
     let [bx, by] = panel_image_slots[i]
@@ -1326,7 +1316,7 @@ let content_6 = `<div class="padded">
   <h1>Ranking superpixels</h1>
   <div>
     <div class="p">Here we show an example image with the top contributing superpixels, as determined by LIME, highlighted for each model. If you look at the image showing the "top 9" features, you can see that for the IRM model (top row) the coyote body is highlighted, while in the ERM model (bottom row) it is not.</div>
-    <p>This kind of result would seem to indicate that the IRM model is better able to focus on the invariant features (the animal) versus the variant (the background environment). That could be the explanation for why it performs better on the the environment <span style="background: ${highlights.brown};">3</span> dataset, which neither model has seen before.
+    <p>This kind of result would seem to indicate that the IRM model is better able to focus on the invariant features (the animal) versus the variant (the background environment). That could be the explanation for why it performs better on the environment <span style="background: ${highlights.brown};">3</span> dataset, which neither model has seen before.
   </div>
 </div>`
 
@@ -1526,7 +1516,7 @@ if (args.includes('6')) {
 let content_7 = `<div class="padded">
   <h1>Model comparison</h1>
   <div>
-  <p> If all the of the model oomparison looked like example <span style="background: ${highlights.brown};">3</span>-433, we could confidently say the IRM model is better at recognizing the animal across environments. <span style="background: ${highlights.brown};">3</span>-433 is only one example, however, and while it is definitely possible to find other images where the IRM highlighted features include the animal and the ERM do not (as in the examples shown here, where the top 12 features for each model are highlighted) it is definitely not the case for all of the images.</p> 
+  <p> If all the of the model comparison looked like example <span style="background: ${highlights.brown};">3</span>-433, we could confidently say the IRM model is better at recognizing the animal across environments. <span style="background: ${highlights.brown};">3</span>-433 is only one example, however, and while it is definitely possible to find other images where the IRM highlighted features include the animal and the ERM do not (as in the examples shown here, where the top 12 features for each model are highlighted) it is definitely not the case for all of the images.</p> 
   <p>Looking through the entire dataset shows a lot of variation in which superpixels are highlighted for each model. The lack of a consistent, obvious pattern in the top features could mean neither model is successfully isolating the animal features, or it could mean this interpretability approach is not capable of visually capturing their focus (or it could be both).</div>
   </div>
 </div>`
