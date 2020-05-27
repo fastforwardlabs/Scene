@@ -386,7 +386,7 @@ let content_0 = `<div class="padded">
   <div class="spacer"></div>
   <div>
   <p>Built to accompany our report on <a href="https://ff13.fastforwardlabs.com" target="_blank">Causality in Machine Learning</a>, Scene shows how we applied the invariant risk minimization (IRM) technique to a portion of the iWildcam dataset.
-  <p>WIth IRM, you group training data into environments. Declaring environments helps minimize spurious correlations during model training. Below, we guide you through the process and model results using images from the dataset.</p>
+  <p>WIth IRM, you group training data into environments. Being explicit about environments helps minimize spurious correlations during model training. Below, we guide you through the process and model results using images from the dataset.</p>
     <div class="spacer"></div>
     <h2>Contents</h2>
     <ol style="">
@@ -474,7 +474,7 @@ let bot_row = `<div style="display: inline; background: #dfdfdf; position: relat
 let content_1 = `<div class="padded">
   <h1>Training environments</h1>
   <div>
-    <div class="p">The <a target="_blank" href="https://arxiv.org/abs/1907.07617">full iWildcam dataset</a> contains over 300,000 images from 143 cameras. For our training we limited it to two cameras, which we grouped as environments <span style="background: ${highlights.yellow};">1</span> (top row) and <span style="background: ${highlights.orange};">2</span> (bottom row). The camera locations map naturally to the concept of environments used in IRM. Looking at the sample images you can see the background remains constant across an environment (though time of day does change).</div>
+    <div class="p">The <a target="_blank" href="https://arxiv.org/abs/1907.07617">full iWildcam dataset</a> contains over 300,000 images from 143 cameras in different locations. For our training we limited it to two cameras, which we grouped as environments <span style="background: ${highlights.yellow};">1</span> (top row) and <span style="background: ${highlights.orange};">2</span> (bottom row). The camera locations map naturally to the concept of environments used in IRM. Looking at the sample images you can see the background remains constant across an environment (though time of day does change).</div>
     <p>We trained a binary classifier, so we further limited the dataset to images of coyotes and raccoons. The final numbers for our training datasets are:</p>
     <div class="spacer"></div>
     <ul>
@@ -655,7 +655,7 @@ let content_3 = `<div class="padded">
       highlights.yellow
     }">1</span> & <span style="background: ${
   highlights.orange
-}">2</span>) their accuracy is nearly equal.
+}">2</span>) their accuracy is nearly equal. As a baseline, a model that always predicted coyote would achieve 68% accuracy (because the majority of the datasets are coyotes).
     </div>
       <div style="padding-top: 8px; padding-bottom: 8px;">
         <img class="chart" src="${chart.toDataURL()}" />
