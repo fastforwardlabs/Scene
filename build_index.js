@@ -2,6 +2,10 @@ let fs = require('fs')
 let { createCanvas: _createCanvas, loadImage } = require('canvas')
 let _ = require('lodash')
 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
 let px = val => val + 'px'
 
 let createCanvas = (width, height) => {
@@ -392,9 +396,10 @@ let content_0 = `<div class="padded">
       'Interpretability',
       'Ranking superpixels',
       'Model comparison',
+      'View all',
     ]
       .map((n, i) => {
-        return `<li><a href="#bar_${i}">${n}</a></li>`
+        return `<li><a href="#panel_${i}">${n}</a></li>`
       })
       .join('')}
    </ol>
@@ -475,19 +480,19 @@ let content_1 = `<div class="padded">
     <ul>
       <li>environment <span style="background: ${highlights.yellow};">1</span>
       <ul>
-      <li>658 images
+      <li>TODO
         <ul>
-      <li>582 racoons</li>
-      <li>276 coyotes</li>
+      <li></li>
+      <li></li>
         </ul>
       </li>
       </ul>
       <li>environment <span style="background: ${highlights.orange};">2</span>
       <ul>
-      <li>753 images
+      <li>TODO
         <ul>
-      <li>512 coyotes</li>
-      <li>241 raccoons</li>
+      <li></li>
+      <li></li>
         </ul>
       </li>
       </ul>
@@ -921,7 +926,7 @@ if (args.includes('4')) {
     ..._.sampleSize(test_irm_only_right, 6),
     ..._.sampleSize(test_right, 6),
   ]
-  images = [output_with_indexes[1667], ..._.shuffle(images)]
+  images = [output_with_indexes[2044], ..._.shuffle(images)]
   for (let i = 0; i < images.length; i++) {
     let image = images[i]
     let [bx, by] = panel_image_slots[i]
@@ -1032,7 +1037,7 @@ if (args.includes('5')) {
 
   let promises = []
 
-  let test1 = output_with_indexes[1667]
+  let test1 = output_with_indexes[2044]
   for (let i = 0; i < 4; i++) {
     let image = test1
     let index = image.index
@@ -1317,7 +1322,7 @@ if (args.includes('6')) {
     return erm_prediction === label && irm_prediction === label
   })
 
-  let test1 = output_with_indexes[1667]
+  let test1 = output_with_indexes[2044]
   for (let i = 0; i < 8; i++) {
     let image = test1
     let index = image.index
@@ -1378,7 +1383,7 @@ if (args.includes('6')) {
         image.erm.prob * 16
       )
     } else {
-      let highlight_num = i
+      let highlight_num = i + 5
       let superpixel_num = og_item.erm.coefficients.length
       promises.push(
         placeSingleImageHighlight(
@@ -1392,7 +1397,7 @@ if (args.includes('6')) {
         )
       )
       cx.fillStyle = color.gray_text
-      let text = 'ERM top ' + i
+      let text = 'ERM top ' + (i + 5)
       let w = cx.measureText(text).width
       let rx = size.x - w - 16
       cx.fillText(text, x + rx, y + size.y - y_adjust)
@@ -1441,7 +1446,7 @@ if (args.includes('6')) {
       cx.fillText('IRM', x, y + size.y - y_adjust)
 
       x += 4 * 8
-      if (erm_prediction === label) {
+      if (irm_prediction === label) {
         cx.fillStyle = highlights.green
       } else {
         cx.fillStyle = highlights.red
@@ -1459,7 +1464,7 @@ if (args.includes('6')) {
         image.irm.prob * 16
       )
     } else {
-      let highlight_num = i
+      let highlight_num = i + 5
       let superpixel_num = og_item.erm.coefficients.length
       promises.push(
         placeSingleImageHighlight(
@@ -1473,7 +1478,7 @@ if (args.includes('6')) {
         )
       )
       cx.fillStyle = color.gray_text
-      let text = 'IRM top ' + i
+      let text = 'IRM top ' + (i + 5)
       let w = cx.measureText(text).width
       let rx = size.x - w - 16
       cx.fillText(text, x + rx, y + size.y - y_adjust)
@@ -1510,7 +1515,7 @@ if (args.includes('7')) {
   let promises = []
 
   let images = _.sampleSize(output_with_indexes, panel_image_num / 2)
-  let shortlist_test = [1667, 1446, 1838, 1347, 2044, 1750, 2078, 1851]
+  let shortlist_test = [2044, 1838, 1446, 1667, 1750, 1347, 1851, 2078]
   images = shortlist_test.map(i => output_with_indexes[i])
   for (let i = 0; i < images.length; i++) {
     let image = images[i]
@@ -2239,11 +2244,11 @@ let html = `<!DOCTYPE html>
       font-size: 13.333px;
       line-height: 16px;
       color: #2f2f2f;
-      background: #bfbfbf;
+      background: #cfcfcf;
       padding-left: 8px;
       padding-right: 8px;
       height: 24px;
-      border-top: solid 1px #9f9f9f;
+      border-top: solid 1px #afafaf;
      }
      p, .p {
       margin: 0;
@@ -2298,9 +2303,13 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
       .map((n, i) => {
         let content = contents[i]
         return `<div style="position: relative">
-          <div id="bar_${i}" class="bar" style="">
+          <div id="panel_${i}" class="bar" style="">
             <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;"><div>${i +
-              0}</div><div>prev next</div></div>
+              0}</div><div>${
+          i > 0 ? `<a href="#panel_${i - 1}">prev</a>` : ''
+        } ${
+          i < filenames.length - 1 ? `<a href="#panel_${i + 1}">next</a>` : ''
+        }</div></div>
           </div>
         <div class="panel" style="position: relative;">
           <div style="width: 100%; padding-left: ${size.x * 2 -
