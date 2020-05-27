@@ -8,12 +8,20 @@
     />
     <title>Wilcat</title>
     <style type="text/css">
+        @font-face {
+          font-family: 'custom';
+          src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2'),
+            url('/fonts/JetBrainsMono-Regular.woff') format('woff');
+         font-weight: 400;
+        font-style: normal;
+      }
+ 
       * {
         box-sizing: border-box;
       }
       html {
         background: white;
-        font-family: "JetBrains Mono", monospace;
+        font-family: "custom", monospace;
         font-size: 13.333px;
         line-height: 16px;
         scroll-behavior: smooth;

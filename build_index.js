@@ -1640,6 +1640,529 @@ if (args.includes('7')) {
   })
 }
 
+let content_8 = `<div class="padded">
+  <h1>View all</h1>
+  <div>
+  <div class="p">That is the end of our guided tour of appllying IRM to the iWildcam dataset. If you want to see all ${output.length} images dataset, including classifications and ranked superpixels <a href="/all">view them all</a>.</div>
+  </div>
+</div>`
+
+if (args.includes('8')) {
+  let filename = `panel_8.jpg`
+
+  let cx = createCanvas(
+    panel.cols * size.x + offset_x,
+    panel.rows * size.y + offset_y
+  ).getContext('2d')
+  cx.fillStyle = color.black
+  cx.fillRect(0, 0, cx.canvas.width, cx.canvas.height)
+
+  cx.textBaseline = 'middle'
+  cx.font = '13.333px JetBrains Mono'
+  cx.fillStyle = color.gray_text
+
+  let promises = []
+
+  {
+    let index = 0
+    let image = output_with_indexes[index]
+    let x = offset_x
+    let y = offset_y
+    let path = 'data' + image.image_path
+
+    let file_index = [Math.floor(index / 100), index % 100]
+    let og_filename = 'outa' + alphabet[file_index[0]] + '.json'
+    let file_json = JSON.parse(fs.readFileSync('data/' + og_filename, 'utf-8'))
+    let og_item = file_json[file_index[1]]
+
+    let env = getEnv(path)
+    let label = getLabel(path)
+    let long_label = getLongLabel(path)
+    let erm_prediction = image.erm.prediction === 'coyote' ? 'coy' : 'rac'
+    let erm_certainty = Math.floor(image.erm.prob * 100) + '%'
+    let irm_prediction = image.irm.prediction === 'coyote' ? 'coy' : 'rac'
+    let irm_certainty = Math.floor(image.irm.prob * 100) + '%'
+
+    // --original
+    promises.push(placeSingleImage(cx, path, x, y))
+
+    cx.fillStyle = env_colors[env]
+    cx.fillRect(x, y + size.y - y_adjust - 8, 1 * 8, 16)
+
+    cx.fillStyle = color.gray_text
+    cx.fillText(env, x, y + size.y - y_adjust)
+
+    x += 1 * 8
+    cx.fillText(
+      '-' + image.local_index.toString().padStart(3, '0'),
+      x,
+      y + size.y - y_adjust
+    )
+    x += 5 * 8
+    cx.fillText(long_label, x, y + size.y - y_adjust)
+
+    // --superpixels
+    x = size.x + offset_x
+    y = offset_y
+    promises.push(
+      placeSingleImageAndOutline(cx, path, x, y, og_item.irm.segments)
+    )
+    let superpixel_num = og_item.irm.coefficients.length
+    let text = superpixel_num + ' superpixels'
+    let w = cx.measureText(text).width
+    let rx = size.x - w - 16
+    cx.fillText(text, x + rx, y + size.y - y_adjust)
+
+    x = size.x * 2 + offset_x
+    y = offset_y
+    // --ERM
+    promises.push(
+      placeSingleImageHighlight(
+        cx,
+        path,
+        x,
+        y,
+        og_item.erm.segments,
+        og_item.erm.coefficients,
+        12
+      )
+    )
+    x += 19 * 8
+    cx.fillStyle = color.gray_text
+    cx.fillText('ERM', x, y + size.y - y_adjust)
+
+    x += 4 * 8
+    if (erm_prediction === label) {
+      cx.fillStyle = highlights.green
+    } else {
+      cx.fillStyle = highlights.red
+    }
+    cx.fillRect(x, y + size.y - y_adjust - 8, 5 * 8, 16)
+
+    cx.fillStyle = color.gray_text
+    cx.fillText(erm_prediction, x, y + size.y - y_adjust)
+    x += 4 * 8
+    cx.fillStyle = 'rgba(0,0,0,0.2)'
+    cx.fillRect(
+      x,
+      y + size.y - y_adjust - 8 + 16 * (1 - image.erm.prob),
+      8,
+      image.erm.prob * 16
+    )
+
+    x = size.x * 3 + offset_x
+    y = offset_y
+    // --IRM
+    promises.push(
+      placeSingleImageHighlight(
+        cx,
+        path,
+        x,
+        y,
+        og_item.irm.segments,
+        og_item.irm.coefficients,
+        12
+      )
+    )
+    x += 19 * 8
+    cx.fillStyle = color.gray_text
+    cx.fillText('IRM', x, y + size.y - y_adjust)
+
+    x += 4 * 8
+    if (irm_prediction === label) {
+      cx.fillStyle = highlights.green
+    } else {
+      cx.fillStyle = highlights.red
+    }
+    cx.fillRect(x, y + size.y - y_adjust - 8, 5 * 8, 16)
+
+    cx.fillStyle = color.gray_text
+    cx.fillText(irm_prediction, x, y + size.y - y_adjust)
+    x += 4 * 8
+    cx.fillStyle = 'rgba(0,0,0,0.2)'
+    cx.fillRect(
+      x,
+      y + size.y - y_adjust - 8 + 16 * (1 - image.irm.prob),
+      8,
+      image.irm.prob * 16
+    )
+  }
+
+  {
+    let index = train_46[0].index
+    let image = output_with_indexes[index]
+    let x = offset_x + size.x * 4
+    let y = offset_y
+    let path = 'data' + image.image_path
+
+    let file_index = [Math.floor(index / 100), index % 100]
+    let og_filename = 'outa' + alphabet[file_index[0]] + '.json'
+    let file_json = JSON.parse(fs.readFileSync('data/' + og_filename, 'utf-8'))
+    let og_item = file_json[file_index[1]]
+
+    let env = getEnv(path)
+    let label = getLabel(path)
+    let long_label = getLongLabel(path)
+    let erm_prediction = image.erm.prediction === 'coyote' ? 'coy' : 'rac'
+    let erm_certainty = Math.floor(image.erm.prob * 100) + '%'
+    let irm_prediction = image.irm.prediction === 'coyote' ? 'coy' : 'rac'
+    let irm_certainty = Math.floor(image.irm.prob * 100) + '%'
+
+    // --original
+    promises.push(placeSingleImage(cx, path, x, y))
+
+    cx.fillStyle = env_colors[env]
+    cx.fillRect(x, y + size.y - y_adjust - 8, 1 * 8, 16)
+
+    cx.fillStyle = color.gray_text
+    cx.fillText(env, x, y + size.y - y_adjust)
+
+    x += 1 * 8
+    cx.fillText(
+      '-' + image.local_index.toString().padStart(3, '0'),
+      x,
+      y + size.y - y_adjust
+    )
+    x += 5 * 8
+    cx.fillText(long_label, x, y + size.y - y_adjust)
+
+    // --superpixels
+    x = size.x * 4 + size.x + offset_x
+    y = offset_y
+    promises.push(
+      placeSingleImageAndOutline(cx, path, x, y, og_item.irm.segments)
+    )
+    let superpixel_num = og_item.irm.coefficients.length
+    let text = superpixel_num + ' superpixels'
+    let w = cx.measureText(text).width
+    let rx = size.x - w - 16
+    cx.fillText(text, x + rx, y + size.y - y_adjust)
+
+    x = size.x * 4 + size.x * 2 + offset_x
+    y = offset_y
+    // --ERM
+    promises.push(
+      placeSingleImageHighlight(
+        cx,
+        path,
+        x,
+        y,
+        og_item.erm.segments,
+        og_item.erm.coefficients,
+        12
+      )
+    )
+    x += 19 * 8
+    cx.fillStyle = color.gray_text
+    cx.fillText('ERM', x, y + size.y - y_adjust)
+
+    x += 4 * 8
+    if (erm_prediction === label) {
+      cx.fillStyle = highlights.green
+    } else {
+      cx.fillStyle = highlights.red
+    }
+    cx.fillRect(x, y + size.y - y_adjust - 8, 5 * 8, 16)
+
+    cx.fillStyle = color.gray_text
+    cx.fillText(erm_prediction, x, y + size.y - y_adjust)
+    x += 4 * 8
+    cx.fillStyle = 'rgba(0,0,0,0.2)'
+    cx.fillRect(
+      x,
+      y + size.y - y_adjust - 8 + 16 * (1 - image.erm.prob),
+      8,
+      image.erm.prob * 16
+    )
+
+    x = size.x * 4 + size.x * 3 + offset_x
+    y = offset_y
+    // --IRM
+    promises.push(
+      placeSingleImageHighlight(
+        cx,
+        path,
+        x,
+        y,
+        og_item.irm.segments,
+        og_item.irm.coefficients,
+        12
+      )
+    )
+    x += 19 * 8
+    cx.fillStyle = color.gray_text
+    cx.fillText('IRM', x, y + size.y - y_adjust)
+
+    x += 4 * 8
+    if (irm_prediction === label) {
+      cx.fillStyle = highlights.green
+    } else {
+      cx.fillStyle = highlights.red
+    }
+    cx.fillRect(x, y + size.y - y_adjust - 8, 5 * 8, 16)
+
+    cx.fillStyle = color.gray_text
+    cx.fillText(irm_prediction, x, y + size.y - y_adjust)
+    x += 4 * 8
+    cx.fillStyle = 'rgba(0,0,0,0.2)'
+    cx.fillRect(
+      x,
+      y + size.y - y_adjust - 8 + 16 * (1 - image.irm.prob),
+      8,
+      image.irm.prob * 16
+    )
+  }
+
+  {
+    let index = test[0].index
+    let image = output_with_indexes[index]
+    let x = offset_x
+    let y = offset_y + size.y
+    let path = 'data' + image.image_path
+
+    let file_index = [Math.floor(index / 100), index % 100]
+    let og_filename = 'outa' + alphabet[file_index[0]] + '.json'
+    let file_json = JSON.parse(fs.readFileSync('data/' + og_filename, 'utf-8'))
+    let og_item = file_json[file_index[1]]
+
+    let env = getEnv(path)
+    let label = getLabel(path)
+    let long_label = getLongLabel(path)
+    let erm_prediction = image.erm.prediction === 'coyote' ? 'coy' : 'rac'
+    let erm_certainty = Math.floor(image.erm.prob * 100) + '%'
+    let irm_prediction = image.irm.prediction === 'coyote' ? 'coy' : 'rac'
+    let irm_certainty = Math.floor(image.irm.prob * 100) + '%'
+
+    // --original
+    promises.push(placeSingleImage(cx, path, x, y))
+
+    cx.fillStyle = env_colors[env]
+    cx.fillRect(x, y + size.y - y_adjust - 8, 1 * 8, 16)
+
+    cx.fillStyle = color.gray_text
+    cx.fillText(env, x, y + size.y - y_adjust)
+
+    x += 1 * 8
+    cx.fillText(
+      '-' + image.local_index.toString().padStart(3, '0'),
+      x,
+      y + size.y - y_adjust
+    )
+    x += 5 * 8
+    cx.fillText(long_label, x, y + size.y - y_adjust)
+
+    // --superpixels
+    x = size.x + offset_x
+    promises.push(
+      placeSingleImageAndOutline(cx, path, x, y, og_item.irm.segments)
+    )
+    let superpixel_num = og_item.irm.coefficients.length
+    let text = superpixel_num + ' superpixels'
+    let w = cx.measureText(text).width
+    let rx = size.x - w - 16
+    cx.fillText(text, x + rx, y + size.y - y_adjust)
+
+    x = size.x * 2 + offset_x
+    // --ERM
+    promises.push(
+      placeSingleImageHighlight(
+        cx,
+        path,
+        x,
+        y,
+        og_item.erm.segments,
+        og_item.erm.coefficients,
+        12
+      )
+    )
+    x += 19 * 8
+    cx.fillStyle = color.gray_text
+    cx.fillText('ERM', x, y + size.y - y_adjust)
+
+    x += 4 * 8
+    if (erm_prediction === label) {
+      cx.fillStyle = highlights.green
+    } else {
+      cx.fillStyle = highlights.red
+    }
+    cx.fillRect(x, y + size.y - y_adjust - 8, 5 * 8, 16)
+
+    cx.fillStyle = color.gray_text
+    cx.fillText(erm_prediction, x, y + size.y - y_adjust)
+    x += 4 * 8
+    cx.fillStyle = 'rgba(0,0,0,0.2)'
+    cx.fillRect(
+      x,
+      y + size.y - y_adjust - 8 + 16 * (1 - image.erm.prob),
+      8,
+      image.erm.prob * 16
+    )
+
+    x = size.x * 3 + offset_x
+    // --IRM
+    promises.push(
+      placeSingleImageHighlight(
+        cx,
+        path,
+        x,
+        y,
+        og_item.irm.segments,
+        og_item.irm.coefficients,
+        12
+      )
+    )
+    x += 19 * 8
+    cx.fillStyle = color.gray_text
+    cx.fillText('IRM', x, y + size.y - y_adjust)
+
+    x += 4 * 8
+    if (irm_prediction === label) {
+      cx.fillStyle = highlights.green
+    } else {
+      cx.fillStyle = highlights.red
+    }
+    cx.fillRect(x, y + size.y - y_adjust - 8, 5 * 8, 16)
+
+    cx.fillStyle = color.gray_text
+    cx.fillText(irm_prediction, x, y + size.y - y_adjust)
+    x += 4 * 8
+    cx.fillStyle = 'rgba(0,0,0,0.2)'
+    cx.fillRect(
+      x,
+      y + size.y - y_adjust - 8 + 16 * (1 - image.irm.prob),
+      8,
+      image.irm.prob * 16
+    )
+  }
+
+  {
+    let index = output_with_indexes.length - 1
+    let image = output_with_indexes[index]
+    let x = offset_x + size.x * 4
+    let y = offset_y + size.y
+    let path = 'data' + image.image_path
+
+    let file_index = [Math.floor(index / 100), index % 100]
+    let og_filename = 'outa' + alphabet[file_index[0]] + '.json'
+    let file_json = JSON.parse(fs.readFileSync('data/' + og_filename, 'utf-8'))
+    let og_item = file_json[file_index[1]]
+
+    let env = getEnv(path)
+    let label = getLabel(path)
+    let long_label = getLongLabel(path)
+    let erm_prediction = image.erm.prediction === 'coyote' ? 'coy' : 'rac'
+    let erm_certainty = Math.floor(image.erm.prob * 100) + '%'
+    let irm_prediction = image.irm.prediction === 'coyote' ? 'coy' : 'rac'
+    let irm_certainty = Math.floor(image.irm.prob * 100) + '%'
+
+    // --original
+    promises.push(placeSingleImage(cx, path, x, y))
+
+    cx.fillStyle = env_colors[env]
+    cx.fillRect(x, y + size.y - y_adjust - 8, 1 * 8, 16)
+
+    cx.fillStyle = color.gray_text
+    cx.fillText(env, x, y + size.y - y_adjust)
+
+    x += 1 * 8
+    cx.fillText(
+      '-' + image.local_index.toString().padStart(3, '0'),
+      x,
+      y + size.y - y_adjust
+    )
+    x += 5 * 8
+    cx.fillText(long_label, x, y + size.y - y_adjust)
+
+    // --superpixels
+    x = size.x * 4 + size.x + offset_x
+    promises.push(
+      placeSingleImageAndOutline(cx, path, x, y, og_item.irm.segments)
+    )
+    let superpixel_num = og_item.irm.coefficients.length
+    let text = superpixel_num + ' superpixels'
+    let w = cx.measureText(text).width
+    let rx = size.x - w - 16
+    cx.fillText(text, x + rx, y + size.y - y_adjust)
+
+    x = size.x * 4 + size.x * 2 + offset_x
+    // --ERM
+    promises.push(
+      placeSingleImageHighlight(
+        cx,
+        path,
+        x,
+        y,
+        og_item.erm.segments,
+        og_item.erm.coefficients,
+        12
+      )
+    )
+    x += 19 * 8
+    cx.fillStyle = color.gray_text
+    cx.fillText('ERM', x, y + size.y - y_adjust)
+
+    x += 4 * 8
+    if (erm_prediction === label) {
+      cx.fillStyle = highlights.green
+    } else {
+      cx.fillStyle = highlights.red
+    }
+    cx.fillRect(x, y + size.y - y_adjust - 8, 5 * 8, 16)
+
+    cx.fillStyle = color.gray_text
+    cx.fillText(erm_prediction, x, y + size.y - y_adjust)
+    x += 4 * 8
+    cx.fillStyle = 'rgba(0,0,0,0.2)'
+    cx.fillRect(
+      x,
+      y + size.y - y_adjust - 8 + 16 * (1 - image.erm.prob),
+      8,
+      image.erm.prob * 16
+    )
+
+    x = size.x * 4 + size.x * 3 + offset_x
+    // --IRM
+    promises.push(
+      placeSingleImageHighlight(
+        cx,
+        path,
+        x,
+        y,
+        og_item.irm.segments,
+        og_item.irm.coefficients,
+        12
+      )
+    )
+    x += 19 * 8
+    cx.fillStyle = color.gray_text
+    cx.fillText('IRM', x, y + size.y - y_adjust)
+
+    x += 4 * 8
+    if (irm_prediction === label) {
+      cx.fillStyle = highlights.green
+    } else {
+      cx.fillStyle = highlights.red
+    }
+    cx.fillRect(x, y + size.y - y_adjust - 8, 5 * 8, 16)
+
+    cx.fillStyle = color.gray_text
+    cx.fillText(irm_prediction, x, y + size.y - y_adjust)
+    x += 4 * 8
+    cx.fillStyle = 'rgba(0,0,0,0.2)'
+    cx.fillRect(
+      x,
+      y + size.y - y_adjust - 8 + 16 * (1 - image.irm.prob),
+      8,
+      image.irm.prob * 16
+    )
+  }
+
+  Promise.all(promises).then(() => {
+    let buffer = cx.canvas.toBuffer('image/jpeg')
+    fs.writeFileSync(`panels/` + filename, buffer)
+  })
+}
+
 let filenames = [
   `panel_0.jpg`,
   'panel_1.jpg',
@@ -1649,6 +2172,7 @@ let filenames = [
   'panel_5.jpg',
   'panel_6.jpg',
   'panel_7.jpg',
+  'panel_8.jpg',
 ]
 let contents = [
   content_0,
@@ -1659,6 +2183,7 @@ let contents = [
   content_5,
   content_6,
   content_7,
+  content_8,
 ]
 // contents = [content_1]
 
@@ -1670,7 +2195,7 @@ let html = `<!DOCTYPE html>
       name="viewport"
       content="width=device-width,initial-scale=1,shrink-to-fit=no"
     />
-    <title>Wilcat</title>
+    <title>Scene</title>
     <style type="text/css">
         @font-face {
           font-family: 'custom';
