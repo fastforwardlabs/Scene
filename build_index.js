@@ -381,10 +381,12 @@ let y_adjust = 24
 
 // --panels
 let content_0 = `<div class="padded">
-  <h1>Scene</h1>
+  <h1 style="font-size: 28px;">Scene</h1>
+  <div style="margin-top: -4px;">by <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">Cloudera Fast Forward</a></div>
+  <div class="spacer"></div>
   <div>
-  <p>Built to accompany our report on <a href="">Causality in Machine Learning</a>, Scene shows how we applied a technique called invariant risk minimization (IRM) to a portion of the iWildcam dataset.
-  <p>WIth IRM, you group training data into environments. Declaring environments helps minimize spurious correlations during model training. Here, we explain the technique using real sample images and model results.</p>
+  <p>Built to accompany our report on <a href="https://ff13.fastforwardlabs.com" target="_blank">Causality in Machine Learning</a>, Scene shows how we applied the invariant risk minimization (IRM) technique to a portion of the iWildcam dataset.
+  <p>WIth IRM, you group training data into environments. Declaring environments helps minimize spurious correlations during model training. Below, we guide you through the process and model results using images from the dataset.</p>
     <div class="spacer"></div>
     <h2>Contents</h2>
     <ol style="">
@@ -472,27 +474,25 @@ let bot_row = `<div style="display: inline; background: #dfdfdf; position: relat
 let content_1 = `<div class="padded">
   <h1>Training environments</h1>
   <div>
-    <div class="p">The full iWIldcam dataset contains 0000 images from 000 cameras. For our training we limited it to two cameras: train_43, which we grouped as environment <span style="background: ${highlights.yellow};">1</span> ${top_row}, and train_46, which we grouped as environment <span style="background: ${highlights.orange};">2</span> ${bot_row}.</div>
-    <p>We wanted to train a binary classifier, so we further limted the dataset to images of coyotes and raccoons.</p><p>The final stats for our training dataset are:</p>
+    <div class="p">The <a target="_blank" href="https://arxiv.org/abs/1907.07617">full iWildcam dataset</a> contains over 300,000 images from 143 cameras. For our training we limited it to two cameras, which we grouped as environments <span style="background: ${highlights.yellow};">1</span> (top row) and <span style="background: ${highlights.orange};">2</span> (bottom row). The camera locations map naturally to the concept of environments used in IRM. Looking at the sample images you can see the background remains constant across an environment (though time of day does change).</div>
+    <p>We trained a binary classifier, so we further limited the dataset to images of coyotes and raccoons. The final numbers for our training datasets are:</p>
     <div class="spacer"></div>
-    <div class="spacer"></div>
-  <h2>Training dataset</h2>
     <ul>
       <li>environment <span style="background: ${highlights.yellow};">1</span>
       <ul>
-      <li>TODO
+      <li>858 images
         <ul>
-      <li></li>
-      <li></li>
+      <li>582 coyotes</li>
+      <li>276 raccoons</li>
         </ul>
       </li>
       </ul>
       <li>environment <span style="background: ${highlights.orange};">2</span>
       <ul>
-      <li>TODO
+      <li>753 images
         <ul>
-      <li></li>
-      <li></li>
+      <li>512 coyotes</li>
+      <li>241 raccoons</li>
         </ul>
       </li>
       </ul>
@@ -554,10 +554,9 @@ if (args.includes('1')) {
 let content_2 = `<div class="padded">
   <h1>Model training</h1>
   <div>
-    <div class="p">We trained two models, one using IRM, and one using the more conventional empirical risk minimization (ERM).</div>
-    <div class="p">For ERM training ${top_row}, all the images are fed in together, with no distinction made between environemnts. In IRM training ${bot_row}, the images are grouped by environment and [EXPLAIN HOW IRM WORKS].</div>
+   <div class="p">We trained two models, one using IRM, and one using the more conventional empirical risk minimization (ERM).</div>
+    <div class="p">For ERM training, all the images are fed in together (top row), with no distinction made between environments. In IRM training, the images are grouped by environment (bottom row) and the loss function is adjusted to try and balance performance across both environments.</div>
   </div>
- 
 </div>`
 
 if (args.includes('2')) {
@@ -664,13 +663,27 @@ let chart = createCanvas(size.x * 2 - 48, 8 * 9)
 
 let content_3 = `<div class="padded">
     <h1>Results: training dataset</h1>
-    <div style="padding-top: 8px; padding-bottom: 8px;">
-      <img class="chart" src="${chart.toDataURL()}" />
+   <div>
+    <p>Now let's take a look at how our trained models performed. On the combined training datasets (<span style="background: ${
+      highlights.yellow
+    }">1</span> & <span style="background: ${
+  highlights.orange
+}">2</span>) their accuracy is nearly equal.
     </div>
+      <div style="padding-top: 8px; padding-bottom: 8px;">
+        <img class="chart" src="${chart.toDataURL()}" />
+    </div>
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+    <h2>Reading the classifications</h2>
     <div>
-      <div class="p">Accuracy of the two models on the combined training datasets is about the same.</div>
-      <div class="p">On the right you can see sample images from the dataset and their predictions (ERM under 'E' and IRM under 'I'). The shaded bar in the label shows the model's certainty.</div>
-    </div>
+    <div class="p">On the right, you can see sample classifications from the dataset. The ERM prediction is labeled 'E' and the IRM prediction 'I'. An accurate prediction is highlighted <span style="background: ${
+      highlights.green
+    }">green</span> and an inaccurate one <span style="background: ${
+  highlights.red
+};">red</span>. The shaded bar at the end of the prediction indicates the model's certainty.</div>
+</div>
+
 </div>`
 
 if (args.includes('3')) {
@@ -870,10 +883,27 @@ let chart_4 = createCanvas(size.x * 2 - 48, 8 * 9)
 
 let content_4 = `<div class="padded">
     <h1>Results: test dataset</h1>
-    <div style="padding-top: 8px; padding-bottom: 8px;">
+    <div>
+    <p>But now look at what happens when we introduce a third environment:</p>
+    <div style="padding-top: 8px; padding-bottom: 12px;">
       <img class="chart" src="${chart_4.toDataURL()}" />
     </div>
-    <div class="p">But what happens when we introduce a third environemnt. A different camera. IRM outperforms.</div>
+    <p>For our test dataset, environment <span style="background: ${
+      highlights.brown
+    }">3</span>, we used a different camera from the iWildcam dataset, which neither model saw during training. On the new dataset IRM vastly outperforms ERM, with IRM achieving 79% accuracy versus the ERM model's 36%. This performance suggests IRM has made the model more accurate across different environments.</p>
+    <div class="spacer"></div>
+    <ul>
+      <li>environment <span style="background: ${highlights.brown};">3</span>
+      <ul>
+      <li>522 images
+        <ul>
+      <li>144 coyotes</li>
+      <li>378 raccoons</li>
+        </ul>
+      </li>
+      </ul>
+      </ul>
+      </div>
 </div>`
 
 if (args.includes('4')) {
@@ -1018,7 +1048,8 @@ if (args.includes('4')) {
 
 let content_5 = `<div class="padded">
     <h1>Interpretability</h1>
-   <div class="p">So we can see IRM outperforms ERM on a new environment. It would be nice to have a better sense of what is going on. For that we turn to an interpretability technique called LIME. LIME works by taking an image and splitting it into superpixels. It makes permutations of the images by masking different combinations of the ysuperpixels.</div>
+   <div class="p">IRM's results on the test dataset look promising. But it would be nice to have a better sense of what is driving the classifications for each model.</div>
+   <p>To try and better understand the models we used an interpretability technique called <a target="_blank" href="https://www.oreilly.com/content/introduction-to-local-interpretable-model-agnostic-explanations-lime/">LIME</a> to to visualize which parts of the image were driving the classification. To do this, LIME first splits an image into superpixels. It then creates permutations of the original image by randomly masking different combinations of those superpixels. It builds a regression model on those permutations and uses that to determine which superpixels contribute most to the classification.</p>
 </div>`
 
 if (args.includes('5')) {
@@ -1294,7 +1325,8 @@ if (args.includes('5')) {
 let content_6 = `<div class="padded">
   <h1>Ranking superpixels</h1>
   <div>
-    <div class="p">Using the LIME values we can rank superpixels which are important to the prediction.</div>
+    <div class="p">Here we show an example image with the top contributing superpixels, as determined by LIME, highlighted for each model. If you look at the image showing the "top 9" features, you can see that for the IRM model (top row) the coyote body is highlighted, while in the ERM model (bottom row) it is not.</div>
+    <p>This kind of result would seem to indicate that the IRM model is better able to focus on the invariant features (the animal) versus the variant (the background environment). That could be the explanation for why it performs better on the the environment <span style="background: ${highlights.brown};">3</span> dataset, which neither model has seen before.
   </div>
 </div>`
 
@@ -1494,7 +1526,8 @@ if (args.includes('6')) {
 let content_7 = `<div class="padded">
   <h1>Model comparison</h1>
   <div>
-    <div class="p">By looking at the ranked superpixels for the different models we can get a better idea of what they're focused on. Here are some sample images suggesting that IRM may be more focused on images containing the animal (the result we would hope for). Neither the model nor the interpretability technique are perfect.</div>
+  <p> If all the of the model oomparison looked like example <span style="background: ${highlights.brown};">3</span>-433, we could confidently say the IRM model is better at recognizing the animal across environments. <span style="background: ${highlights.brown};">3</span>-433 is only one example, however, and while it is definitely possible to find other images where the IRM highlighted features include the animal and the ERM do not (as in the examples shown here, where the top 12 features for each model are highlighted) it is definitely not the case for all of the images.</p> 
+  <p>Looking through the entire dataset shows a lot of variation in which superpixels are highlighted for each model. The lack of a consistent, obvious pattern in the top features could mean neither model is successfully isolating the animal features, or it could mean this interpretability approach is not capable of visually capturing their focus (or it could be both).</div>
   </div>
 </div>`
 
@@ -1646,9 +1679,16 @@ if (args.includes('7')) {
 }
 
 let content_8 = `<div class="padded">
-  <h1>View all</h1>
+  <h1>See more</h1>
   <div>
-  <div class="p">That is the end of our guided tour of appllying IRM to the iWildcam dataset. If you want to see all ${output.length} images dataset, including classifications and ranked superpixels <a href="/all">view them all</a>.</div>
+    <div class="p">If you would like to see for yourself in you can spot any patterns across highlighted features, you can <a href="/all">view all ${numberWithCommas(
+      output.length
+    )} images in the dataset</a>, along with each model's classifications and ranked superpixels.</div>
+    <p>For more discussion of how we approached building these models, <a href="https://ff13.fastforwardlabs.com/#prototype">read the prototype section of our report</a>. The larger report puts IRM in the context of the larger efforts to bring causality into machine learning.
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+    <div>Thanks for reading! Let us know if you have any questions <a target="_blank" href="https://twitter.com/fastforwardlabs">@fastforwardlabs</a>.
+    </div>
   </div>
 </div>`
 
@@ -2255,6 +2295,9 @@ let html = `<!DOCTYPE html>
       padding: 0;
       text-indent: 2ch;
      }
+     p:first-child, .p:first-child {
+     text-indent: 0;
+     }
      a {
       color: inherit;
      }
@@ -2273,6 +2316,9 @@ let html = `<!DOCTYPE html>
       height: 12px;
       width: 100%;
      }
+    .explainer {
+      font-family: custom; font-size: 15px; line-height: 1.2;  margin: 0;
+      }
      ol, ul {
 font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margin: 0;
 
