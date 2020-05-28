@@ -2330,6 +2330,10 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
      .chart {
       width: 432px;
      }
+    span {
+      padding-left: 0.25ch;
+      padding-right: 0.25ch;
+    }
    </style>
   </head>
   <body>
@@ -2342,7 +2346,9 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
             <div id="panel_${i}" class="bar">
               <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;">
                 <div>${i + 0}</div>
-                <div>${i > 0 ? `<a href="#panel_${i - 1}">prev</a>` : ''} ${
+          <div style="display: none;">${
+            i > 0 ? `<a href="#panel_${i - 1}">prev</a>` : ''
+          } ${
           i < filenames.length - 1 ? `<a href="#panel_${i + 1}">next</a>` : ''
         }
                 </div>
