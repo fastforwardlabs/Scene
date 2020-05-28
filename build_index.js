@@ -407,7 +407,7 @@ let content_0 = `<div class="padded">
    </ol>
     </div>
   </div>
-</div>`
+`
 
 if (args.includes('0')) {
   let filename = `panel_0.jpg`
@@ -496,7 +496,6 @@ let content_1 = `<div class="padded">
         </ul>
       </li>
       </ul>
-      </li>
       </li>
     </ul>
   </div>
@@ -1519,7 +1518,7 @@ let content_7 = `<div class="padded">
   <p> If all the of the model comparison looked like example <span style="background: ${highlights.brown};">3</span>-433, we could confidently say the IRM model is better at recognizing the animal across environments. <span style="background: ${highlights.brown};">3</span>-433 is only one example, however, and while it is definitely possible to find other images where the IRM highlighted features include the animal and the ERM do not (as in the examples shown here, where the top 12 features for each model are highlighted) it is definitely not the case for all of the images.</p> 
   <p>Looking through the entire dataset shows a lot of variation in which superpixels are highlighted for each model. The lack of a consistent, obvious pattern in the top features could mean neither model is successfully isolating the animal features, or it could mean this interpretability approach is not capable of visually capturing their focus (or it could be both).</div>
   </div>
-</div>`
+`
 
 if (args.includes('7')) {
   let filename = `panel_7.jpg`
@@ -2227,6 +2226,7 @@ let html = `<!DOCTYPE html>
   <head>
     <meta charset="utf-8" />
     <meta
+      id="vp"
       name="viewport"
       content="width=device-width,initial-scale=1,shrink-to-fit=no"
     />
@@ -2328,45 +2328,52 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
        width: 1936px;
      }
      .chart {
-
       width: 432px;
      }
-    </style>
+   </style>
   </head>
   <body>
-    <div id="scroller">
+   <div id="holder">
     ${filenames
       .map((n, i) => {
         let content = contents[i]
-        return `<div style="position: relative">
-          <div id="panel_${i}" class="bar" style="">
-            <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;"><div>${i +
-              0}</div><div>${
-          i > 0 ? `<a href="#panel_${i - 1}">prev</a>` : ''
-        } ${
+        return `
+          <div style="position: relative">
+            <div id="panel_${i}" class="bar">
+              <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;">
+                <div>${i + 0}</div>
+                <div>${i > 0 ? `<a href="#panel_${i - 1}">prev</a>` : ''} ${
           i < filenames.length - 1 ? `<a href="#panel_${i + 1}">next</a>` : ''
-        }</div></div>
-          </div>
-        <div class="panel" style="position: relative;">
-          <div style="width: 100%; padding-left: ${size.x * 2 -
-            16}px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
+        }
+                </div>
+              </div>
+            </div>
+          <div class="panel" style="position: relative;">
+            <div style="width: 100%; padding-left: ${size.x * 2 -
+              16}px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
               <img class="panel_image" src="panels/${n}" />
-          </div>
+            </div>
           <div style="position: absolute; left: ${01}px; top: ${0}px; width: ${size.x *
           2 -
           16}px; height: ${size.y * 2 +
           16}px; background: rgba(255,255,255,0.98);">${content}</div>
         </div>
-        </div>`
+          </div>`
       })
       .join('\n')}
-      </div>
+  </div>
  </body>
 
   <script>
-document.addEventListener("DOMContentLoaded", function(){
-    // window.scrollTo((2048-window.innerWidth)/2, window.scrollY, 'auto')
-    })
+  window.onload = function() {
+    if (screen.width < 450) {
+      console.log(screen.width)
+      var mvp = document.getElementById('vp');
+      mvp.setAttribute('content','width=${size.x * 4}');
+      let holder = document.getElementById('holder');
+      holder.style.width = ${size.x * 10} + 'px';
+    }
+  }
   </script>
 
 </html>`

@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta
+      id="vp"
       name="viewport"
       content="width=device-width,initial-scale=1,shrink-to-fit=no"
     />
@@ -104,21 +105,25 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
        width: 1936px;
      }
      .chart {
-
       width: 432px;
      }
-    </style>
+   </style>
   </head>
   <body>
-    <div id="scroller">
-    <div style="position: relative">
-          <div id="panel_0" class="bar" style="">
-            <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;"><div>0</div><div> <a href="#panel_1">next</a></div></div>
-          </div>
-        <div class="panel" style="position: relative;">
-          <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
+   <div id="holder">
+    
+          <div style="position: relative">
+            <div id="panel_0" class="bar">
+              <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;">
+                <div>0</div>
+                <div> <a href="#panel_1">next</a>
+                </div>
+              </div>
+            </div>
+          <div class="panel" style="position: relative;">
+            <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
               <img class="panel_image" src="panels/panel_0.jpg" />
-          </div>
+            </div>
           <div style="position: absolute; left: 1px; top: 0px; width: 464px; height: 528px; background: rgba(255,255,255,0.98);"><div class="padded">
   <h1 style="font-size: 28px;">Scene</h1>
   <div style="margin-top: -4px;">by <a target="_blank" href="https://www.cloudera.com/products/fast-forward-labs-research.html">Cloudera Fast Forward</a></div>
@@ -133,17 +138,22 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
    </ol>
     </div>
   </div>
-</div></div>
+</div>
         </div>
-        </div>
-<div style="position: relative">
-          <div id="panel_1" class="bar" style="">
-            <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;"><div>1</div><div><a href="#panel_0">prev</a> <a href="#panel_2">next</a></div></div>
           </div>
-        <div class="panel" style="position: relative;">
-          <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
+
+          <div style="position: relative">
+            <div id="panel_1" class="bar">
+              <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;">
+                <div>1</div>
+                <div><a href="#panel_0">prev</a> <a href="#panel_2">next</a>
+                </div>
+              </div>
+            </div>
+          <div class="panel" style="position: relative;">
+            <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
               <img class="panel_image" src="panels/panel_1.jpg" />
-          </div>
+            </div>
           <div style="position: absolute; left: 1px; top: 0px; width: 464px; height: 528px; background: rgba(255,255,255,0.98);"><div class="padded">
   <h1>Training environments</h1>
   <div>
@@ -170,20 +180,24 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
       </li>
       </ul>
       </li>
-      </li>
     </ul>
   </div>
 </div></div>
         </div>
-        </div>
-<div style="position: relative">
-          <div id="panel_2" class="bar" style="">
-            <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;"><div>2</div><div><a href="#panel_1">prev</a> <a href="#panel_3">next</a></div></div>
           </div>
-        <div class="panel" style="position: relative;">
-          <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
+
+          <div style="position: relative">
+            <div id="panel_2" class="bar">
+              <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;">
+                <div>2</div>
+                <div><a href="#panel_1">prev</a> <a href="#panel_3">next</a>
+                </div>
+              </div>
+            </div>
+          <div class="panel" style="position: relative;">
+            <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
               <img class="panel_image" src="panels/panel_2.jpg" />
-          </div>
+            </div>
           <div style="position: absolute; left: 1px; top: 0px; width: 464px; height: 528px; background: rgba(255,255,255,0.98);"><div class="padded">
   <h1>Model training</h1>
   <div>
@@ -192,15 +206,20 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
   </div>
 </div></div>
         </div>
-        </div>
-<div style="position: relative">
-          <div id="panel_3" class="bar" style="">
-            <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;"><div>3</div><div><a href="#panel_2">prev</a> <a href="#panel_4">next</a></div></div>
           </div>
-        <div class="panel" style="position: relative;">
-          <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
+
+          <div style="position: relative">
+            <div id="panel_3" class="bar">
+              <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;">
+                <div>3</div>
+                <div><a href="#panel_2">prev</a> <a href="#panel_4">next</a>
+                </div>
+              </div>
+            </div>
+          <div class="panel" style="position: relative;">
+            <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
               <img class="panel_image" src="panels/panel_3.jpg" />
-          </div>
+            </div>
           <div style="position: absolute; left: 1px; top: 0px; width: 464px; height: 528px; background: rgba(255,255,255,0.98);"><div class="padded">
     <h1>Results: training dataset</h1>
    <div>
@@ -218,15 +237,20 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
 
 </div></div>
         </div>
-        </div>
-<div style="position: relative">
-          <div id="panel_4" class="bar" style="">
-            <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;"><div>4</div><div><a href="#panel_3">prev</a> <a href="#panel_5">next</a></div></div>
           </div>
-        <div class="panel" style="position: relative;">
-          <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
+
+          <div style="position: relative">
+            <div id="panel_4" class="bar">
+              <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;">
+                <div>4</div>
+                <div><a href="#panel_3">prev</a> <a href="#panel_5">next</a>
+                </div>
+              </div>
+            </div>
+          <div class="panel" style="position: relative;">
+            <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
               <img class="panel_image" src="panels/panel_4.jpg" />
-          </div>
+            </div>
           <div style="position: absolute; left: 1px; top: 0px; width: 464px; height: 528px; background: rgba(255,255,255,0.98);"><div class="padded">
     <h1>Results: test dataset</h1>
     <div>
@@ -250,30 +274,40 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
       </div>
 </div></div>
         </div>
-        </div>
-<div style="position: relative">
-          <div id="panel_5" class="bar" style="">
-            <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;"><div>5</div><div><a href="#panel_4">prev</a> <a href="#panel_6">next</a></div></div>
           </div>
-        <div class="panel" style="position: relative;">
-          <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
+
+          <div style="position: relative">
+            <div id="panel_5" class="bar">
+              <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;">
+                <div>5</div>
+                <div><a href="#panel_4">prev</a> <a href="#panel_6">next</a>
+                </div>
+              </div>
+            </div>
+          <div class="panel" style="position: relative;">
+            <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
               <img class="panel_image" src="panels/panel_5.jpg" />
-          </div>
+            </div>
           <div style="position: absolute; left: 1px; top: 0px; width: 464px; height: 528px; background: rgba(255,255,255,0.98);"><div class="padded">
     <h1>Interpretability</h1>
    <div class="p">IRM's results on the test dataset look promising. But it would be nice to have a better sense of what is driving the classifications for each model.</div>
    <p>To try and better understand the models we used an interpretability technique called <a target="_blank" href="https://www.oreilly.com/content/introduction-to-local-interpretable-model-agnostic-explanations-lime/">LIME</a> to to visualize which parts of the image were driving the classification. To do this, LIME first splits an image into superpixels. It then creates permutations of the original image by randomly masking different combinations of those superpixels. It builds a regression model on those permutations and uses that to determine which superpixels contribute most to the classification.</p>
 </div></div>
         </div>
-        </div>
-<div style="position: relative">
-          <div id="panel_6" class="bar" style="">
-            <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;"><div>6</div><div><a href="#panel_5">prev</a> <a href="#panel_7">next</a></div></div>
           </div>
-        <div class="panel" style="position: relative;">
-          <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
+
+          <div style="position: relative">
+            <div id="panel_6" class="bar">
+              <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;">
+                <div>6</div>
+                <div><a href="#panel_5">prev</a> <a href="#panel_7">next</a>
+                </div>
+              </div>
+            </div>
+          <div class="panel" style="position: relative;">
+            <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
               <img class="panel_image" src="panels/panel_6.jpg" />
-          </div>
+            </div>
           <div style="position: absolute; left: 1px; top: 0px; width: 464px; height: 528px; background: rgba(255,255,255,0.98);"><div class="padded">
   <h1>Ranking superpixels</h1>
   <div>
@@ -282,32 +316,42 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
   </div>
 </div></div>
         </div>
-        </div>
-<div style="position: relative">
-          <div id="panel_7" class="bar" style="">
-            <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;"><div>7</div><div><a href="#panel_6">prev</a> <a href="#panel_8">next</a></div></div>
           </div>
-        <div class="panel" style="position: relative;">
-          <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
+
+          <div style="position: relative">
+            <div id="panel_7" class="bar">
+              <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;">
+                <div>7</div>
+                <div><a href="#panel_6">prev</a> <a href="#panel_8">next</a>
+                </div>
+              </div>
+            </div>
+          <div class="panel" style="position: relative;">
+            <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
               <img class="panel_image" src="panels/panel_7.jpg" />
-          </div>
+            </div>
           <div style="position: absolute; left: 1px; top: 0px; width: 464px; height: 528px; background: rgba(255,255,255,0.98);"><div class="padded">
   <h1>Model comparison</h1>
   <div>
   <p> If all the of the model comparison looked like example <span style="background: #B5A272;">3</span>-433, we could confidently say the IRM model is better at recognizing the animal across environments. <span style="background: #B5A272;">3</span>-433 is only one example, however, and while it is definitely possible to find other images where the IRM highlighted features include the animal and the ERM do not (as in the examples shown here, where the top 12 features for each model are highlighted) it is definitely not the case for all of the images.</p> 
   <p>Looking through the entire dataset shows a lot of variation in which superpixels are highlighted for each model. The lack of a consistent, obvious pattern in the top features could mean neither model is successfully isolating the animal features, or it could mean this interpretability approach is not capable of visually capturing their focus (or it could be both).</div>
   </div>
-</div></div>
+</div>
         </div>
-        </div>
-<div style="position: relative">
-          <div id="panel_8" class="bar" style="">
-            <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;"><div>8</div><div><a href="#panel_7">prev</a> </div></div>
           </div>
-        <div class="panel" style="position: relative;">
-          <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
+
+          <div style="position: relative">
+            <div id="panel_8" class="bar">
+              <div style="width: 100%; margin: 0 auto; display: flex; justify-content: space-between;">
+                <div>8</div>
+                <div><a href="#panel_7">prev</a> 
+                </div>
+              </div>
+            </div>
+          <div class="panel" style="position: relative;">
+            <div style="width: 100%; padding-left: 464px; overflow: auto; padding-top: 0px; padding-bottom: 0px;">
               <img class="panel_image" src="panels/panel_8.jpg" />
-          </div>
+            </div>
           <div style="position: absolute; left: 1px; top: 0px; width: 464px; height: 528px; background: rgba(255,255,255,0.98);"><div class="padded">
   <h1>See more</h1>
   <div>
@@ -320,14 +364,20 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
   </div>
 </div></div>
         </div>
-        </div>
-      </div>
+          </div>
+  </div>
  </body>
 
   <script>
-document.addEventListener("DOMContentLoaded", function(){
-    // window.scrollTo((2048-window.innerWidth)/2, window.scrollY, 'auto')
-    })
+  window.onload = function() {
+    if (screen.width < 450) {
+      console.log(screen.width)
+      var mvp = document.getElementById('vp');
+      mvp.setAttribute('content','width=960');
+      let holder = document.getElementById('holder');
+      holder.style.width = 2400 + 'px';
+    }
+  }
   </script>
 
 </html>
