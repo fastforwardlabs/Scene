@@ -67,7 +67,24 @@ let html = `<!DOCTYPE html>
       name="viewport"
       content="width=device-width,initial-scale=1,shrink-to-fit=no"
     />
-    <title>Wilcat</title>
+    <title>Scene - all</title>
+  <meta
+name="description"
+content="Scene shows how we applied the invariant risk minimization technique to an image classification model. Take a guided tour through the results, including an interpretability visualization."
+  />
+  <meta property="og:title" content="Scene" />
+  <meta
+property="og:description"
+content="Scene shows how we applied the invariant risk minimization technique to an image classification model. Take a guided tour through the results, including an interpretability visualization."
+  />
+  <meta
+property="og:image"
+content="https://scene.fastforwardlabs.com/scene-all.png"
+  />
+  <meta property="og:url" content="https://scene.fastforwardlabs.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+
     <style type="text/css">
         @font-face {
           font-family: 'custom';
@@ -119,6 +136,8 @@ let html = `<!DOCTYPE html>
   </head>
   <body>
     <div class="container">
+  <div style="padding: 16px; padding-bottom: 0;">This page shows all the images from our ERM and IRM image classification models.<br />For more info and a guided tour, see the <a href="/">main page</a>.</div>
+  <div style="padding-left: 16px; padding-right: 16px;"><hr /></div>
       <div id="train_43">
       <div style="padding: 16px; padding-bottom: 0;">
         Jump to: <a href="#train_43">training environment 1</a>
