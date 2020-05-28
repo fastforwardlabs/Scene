@@ -2352,6 +2352,16 @@ font-family: custom; font-size: 15px; line-height: 1.2; padding-left: 3ch; margi
       padding-right: 0.25ch;
     }
    </style>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-157475426-5"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-157475426-5');
+</script>
   </head>
   <body>
    <div id="holder">
