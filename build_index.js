@@ -386,7 +386,7 @@ let content_0 = `<div class="padded">
   <div class="spacer"></div>
   <div>
   <p>Built to accompany our report on <a href="https://ff13.fastforwardlabs.com" target="_blank">Causality in Machine Learning</a>, Scene shows how we applied the invariant risk minimization (IRM) technique to a portion of the iWildcam dataset.
-  <p>WIth IRM, you group training data into environments. Being explicit about environments helps minimize spurious correlations during model training. Below, we guide you through the process and model results using images from the dataset.</p>
+  <p>With IRM, you group training data into environments. Being explicit about environments helps minimize spurious correlations during model training. Below, we guide you through the process and model results using images from the dataset.</p>
     <div class="spacer"></div>
     <h2>Contents</h2>
     <ol style="">
@@ -474,7 +474,7 @@ let bot_row = `<div style="display: inline; background: #dfdfdf; position: relat
 let content_1 = `<div class="padded">
   <h1>Training environments</h1>
   <div>
-    <div class="p">The <a target="_blank" href="https://arxiv.org/abs/1907.07617">full iWildcam dataset</a> contains over 300,000 images from 143 cameras in different locations. For our training we limited it to two cameras, which we grouped as environments <span style="background: ${highlights.yellow};">1</span> (top row) and <span style="background: ${highlights.orange};">2</span> (bottom row). The camera locations map naturally to the concept of environments used in IRM. Looking at the sample images you can see the background remains constant across an environment (though time of day does change).</div>
+    <div class="p">The <a target="_blank" href="https://arxiv.org/abs/1907.07617">full iWildcam dataset</a> contains over 300,000 images from 143 cameras in different locations. For our training we limited the dataset to two cameras, which we grouped as environments <span style="background: ${highlights.yellow};">1</span> (top row) and <span style="background: ${highlights.orange};">2</span> (bottom row). The camera locations map naturally to the concept of environments used in IRM. Looking at the sample images you can see the background remains constant across an environment (though time of day does change).</div>
     <p>We trained a binary classifier, so we further limited the dataset to images of coyotes and raccoons. The final numbers for our training datasets are:</p>
     <div class="spacer"></div>
     <ul>
@@ -554,7 +554,7 @@ let content_2 = `<div class="padded">
   <h1>Model training</h1>
   <div>
    <div class="p">We trained two models, one using IRM, and one using the more conventional empirical risk minimization (ERM).</div>
-    <div class="p">The environments are fed into both models in batches. For the IRM model, the loss function is adjusted to try and balance classification performance across each environment. The adjusted loss function is what distinguishes IRM from the ERM approach.</div>
+    <div class="p">The environments are fed into both models in batches. For the IRM model, the loss function is adjusted to try to balance classification performance across each environment. The adjusted loss function is what distinguishes IRM from the ERM approach.</div>
   </div>
 </div>`
 
@@ -654,7 +654,7 @@ let content_3 = `<div class="padded">
       highlights.yellow
     }">1</span> & <span style="background: ${
   highlights.orange
-}">2</span>) their accuracy is nearly equal. As a baseline, a model that always predicted coyote would achieve 68% accuracy (because the majority of the datasets are coyotes).
+}">2</span>) their accuracy is nearly equal. As a baseline, a model that always predicted coyote would achieve 68% accuracy (because the majority of the images in the dataset are coyotes).
     </div>
       <div style="padding-top: 8px; padding-bottom: 8px;">
         <img class="chart" src="${chart.toDataURL()}" />
@@ -665,7 +665,7 @@ let content_3 = `<div class="padded">
     <div>
     <div class="p">On the right, you can see sample classifications from the dataset. The ERM prediction is labeled 'E' and the IRM prediction 'I'. An accurate prediction is highlighted <span style="background: ${
       highlights.green
-    }">green</span> and an inaccurate one <span style="background: ${
+    }">green</span> and an inaccurate one is highlighted <span style="background: ${
   highlights.red
 };">red</span>. The shaded bar at the end of the prediction indicates the model's certainty.</div>
 </div>
@@ -1315,7 +1315,7 @@ let content_6 = `<div class="padded">
   <h1>Ranking superpixels</h1>
   <div>
     <div class="p">Here we show an example image with the top contributing superpixels, as determined by LIME, highlighted for each model. If you look at the image showing the "top 9" features, you can see that for the IRM model (top row) the coyote body is highlighted, while in the ERM model (bottom row) it is not.</div>
-    <p>This kind of result would seem to indicate that the IRM model is better able to focus on the invariant features (the animal) versus the variant (the background environment). That could be the explanation for why it performs better on the environment <span style="background: ${highlights.brown};">3</span> dataset, which neither model has seen before.
+    <p>This result would seem to indicate that the IRM model is better able to focus on the invariant features (the animal) versus the variant (the background environment). That could be the explanation for why it performs better on the environment <span style="background: ${highlights.brown};">3</span> dataset, which neither model has seen before.
   </div>
 </div>`
 
@@ -1516,7 +1516,7 @@ let content_7 = `<div class="padded">
   <h1>Model comparison</h1>
   <div>
   <p> If all the of the model comparison looked like example <span style="background: ${highlights.brown};">3</span>-433, we could confidently say the IRM model is better at recognizing the animal across environments. <span style="background: ${highlights.brown};">3</span>-433 is only one example, however, and while it is definitely possible to find other images where the IRM highlighted features include the animal and the ERM do not (as in the examples shown here, where the top 12 features for each model are highlighted) it is definitely not the case for all of the images.</p> 
-  <p>Looking through the entire dataset shows a lot of variation in which superpixels are highlighted for each model. The lack of a consistent, obvious pattern in the top features could mean neither model is successfully isolating the animal features, or it could mean this interpretability approach is not capable of visually capturing their focus (or it could be both).</div>
+  <p>Looking through the entire dataset reveals a lot of variation in which superpixels are highlighted for each model. The lack of a consistent, obvious pattern in the top features could mean neither model is successfully isolating the animal features, or it could mean this interpretability approach is not capable of visually capturing their focus. It could also be both.</div>
   </div>
 `
 
@@ -1670,10 +1670,10 @@ if (args.includes('7')) {
 let content_8 = `<div class="padded">
   <h1>See more</h1>
   <div>
-    <div class="p">If you would like to see for yourself in you can spot any patterns across highlighted features, you can <a href="/all">view all ${numberWithCommas(
+    <div class="p">If you would like to see for yourself if you can spot any patterns across highlighted features, you can <a href="/all">view all ${numberWithCommas(
       output.length
     )} images in the dataset</a>, along with each model's classifications and ranked superpixels.</div>
-    <p>For more discussion of how we approached building these models, <a href="https://ff13.fastforwardlabs.com/#prototype">read the prototype section of our report</a>. The larger report puts IRM in the context of the larger efforts to bring causality into machine learning.
+    <p>For more discussion on how we approached building these models, <a href="https://ff13.fastforwardlabs.com/#prototype">read the prototype section of our report</a>. The larger report puts IRM in the context of the larger efforts to bring causality into machine learning.
     <div class="spacer"></div>
     <div class="spacer"></div>
     <div>Thanks for reading! Let us know if you have any questions <a target="_blank" href="https://twitter.com/fastforwardlabs">@fastforwardlabs</a>.
